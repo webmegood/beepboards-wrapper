@@ -6,9 +6,9 @@
         id        = "com.phonegap.helloworld"
         version   = "1.0.0">
 
-		<name>Beep Boards Vehicle Tracker</name>
+		<name>Beep Boards App for Wrappers</name>
 		<description>
-			Tracks and logs client trips
+			Organises the wrapping process for drivers with upcoming jobs
 		</description>
 	
 		<author email="tech@beepboards.com.au" href="http://beepboards.com.au">
