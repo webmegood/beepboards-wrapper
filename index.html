@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8">
+  <title>Beep Boards | Vehicle Tracker v1.10</title>
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+  <meta http-equiv="Content-Security-Policy" content="default-src *; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'; img-src * data: 'unsafe-inline'; connect-src * 'unsafe-inline'; frame-src *;">
+  <!-- see bookmarked notes on this under 'security -> 'How does Content Security Policy Work?' -->
+  <!-- The above meta allows 'everything' -->
+
+  <!-- FONTS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+	<link href="https://fonts.googleapis.com/css?family=Fjalla+One" rel="stylesheet">
+	<!--link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet"-->
+	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/skeleton.css">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/map.css">
+
+  <!-- JS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+  <script type="text/javascript" src="phonegap.js"></script>
+	<script type="text/javascript" src="js/localforage.min.js"></script>
+	<script type="text/javascript" src="js/image-capture.js"></script>
+	<script type="text/javascript" src="js/login.js"></script>
+
+  <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="icon" type="image/png" href="images/favicon.png">
+
+</head>
+<body>
+
+
+
+
+
+
+
+
+
+  <!-- Landing Page
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  
+    
+  <div class="container" id="landing" style="display: none; opacity: 0.5">
+    <div class="row">
+      <div class="twelve columns" style="text-align:center">
+          <div class="mainLogo">
+						<img src="images/logo_splash.png" alt="Beep Boards Logo" id='imageLoading'>
+					</div>
+          <div class="mainTitle">
+						<img src="images/title.png" alt="Beep Boards">
+					</div>
+      </div>
+    </div>
+  </div>  
+
+
+
+
+
+
+
+
+
+  <!-- 0.0 Authentication Area - Login
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+
+
+  <div class="container" id="login-screen" style="height: 100vh; display: none">
+    <div class="row">
+      <div class="twelve columns" style="text-align:center">
+        <div class="menu_strip">
+    			<h1>LOG IN</h1>
+        </div>
+
+        <div style="margin-top: 45px">
+						<form action="./" method="post">
+            <input type="text" name="txt-email" id="txt-email" value="" placeholder="Your Email" style="width: 100%">
+            <input type="password" name="txt-password" id="txt-password" value="" placeholder="Your Password" style="width: 100%">
+            <!--fieldset class="keep-logged-in-panel">
+							<input name="chck-rememberme" type="checkbox" id="chck-rememberme" style="display: inline-block; margin-right: 4px" value="1" checked="">
+							<label style="display: inline">Keep me logged in</label>
+            </fieldset-->
+						<input type="submit" id="btn-login" name="btn-login" value="Log In" class="button button-primary btn_form" style="	font-family: 'Fjalla One', sans-serif;
+	text-transform: uppercase;
+	font-size:20px;
+	background-color: #3C3;
+	border-color:#3C3;
+	color: #FFF;
+	height: 60px;
+	line-height: 62px;
+  font-weight: 200">
+						<div class="button button-primary btn_form" id="show-pincode" style="font-family: 'Fjalla One', sans-serif;
+	text-transform: uppercase;
+	font-size:20px;
+	background-color: #444;
+	border-color:#999;
+  color: #BBB;
+	height: 60px;
+	line-height: 62px;
+  font-weight: 200	;
+	display: inline-block;">Log In with Pin</div>
+						<div class="form_error" id="add_err">...</div>
+            <p><a href="begin-password-reset.html">Can't access your account?</a></p>
+						</form>
+        </div>
+
+
+
+          
+      </div>
+    </div>
+  </div>  
+
+
+
+
+
+
+  <!-- 0.1 Authentication Area - Pincode
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+
+
+  <div class="container" id="pincode-screen" style="height: 100vh; display: none">
+    <div class="row">
+      <div class="twelve columns" style="text-align:center">
+        <div class="menu_strip">
+    			<h1>ENTER YOUR PIN</h1>
+        </div>
+
+        <div style="margin-top: 40px">
+        
+        		<div class="pincode_display">
+            	<div class="pincode_display_digit" id="pd01"></div>
+            	<div class="pincode_display_digit" id="pd02"></div>
+            	<div class="pincode_display_digit" id="pd03"></div>
+            	<div class="pincode_display_digit" id="pd04"></div>
+               
+            </div>
+            
+            <div class="pincode_keypad">
+							<div class="pincode_keypad_row">
+              	<div class="pincode_keypad_digit" id="pkd01">1</div>
+              	<div class="pincode_keypad_digit" id="pkd02">2</div>
+              	<div class="pincode_keypad_digit" id="pkd03">3</div>
+              </div>
+							<div class="pincode_keypad_row">
+              	<div class="pincode_keypad_digit" id="pkd04">4</div>
+              	<div class="pincode_keypad_digit" id="pkd05">5</div>
+              	<div class="pincode_keypad_digit" id="pkd06">6</div>
+              </div>
+							<div class="pincode_keypad_row">
+              	<div class="pincode_keypad_digit" id="pkd07">7</div>
+              	<div class="pincode_keypad_digit" id="pkd08">8</div>
+              	<div class="pincode_keypad_digit" id="pkd09">9</div>
+              </div>
+							<div class="pincode_keypad_row">
+              	<div class="pincode_keypad_text pincode_keypad_clear" id="clear-pincode">Clear</div>
+              	<div class="pincode_keypad_digit" id="pkd00">0</div>
+              	<div class="pincode_keypad_text pincode_keypad_cancel" id="show-login-temp">Cancel</div>
+              </div>
+
+            </div>
+            
+						<div class="pincode_error" style="display: none">Please Try Again</div>            
+
+        </div>
+
+
+
+          
+      </div>
+    </div>
+  </div>  
+  
+  
+  
+
+  <!-- 1.0 Home Page Layout
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  
+    
+  <div class="container" id="home" style="display: none">
+    <div class="row">
+      <div class="twelve columns" style="text-align:center">
+        <div class="menu_strip">
+    			<h1>BEEP BOARDS</h1>
+        </div>
+          <h2>VEHICLE TRACKER</h2>
+          <div class="mainLogo"><img src="images/logo_lg_static.jpg" alt="Beep Boards Logo"></div>
+      </div>
+    </div>
+  </div>  
+  
+  
+
+  <!-- 2.0 Background Panel
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  
+  
+	<div class="container" id="backgroundPanel"></div>  
+  
+  
+  
+  
+  <!-- 3.0 Tracks Page Layout
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  
+  
+	<div class="container secondary" id="tracks">
+    <div class="row">
+      <div class="twelve columns" style="text-align:center">
+        <div class="menu_strip">
+    			<h1>TRACKS</h1>
+        </div>
+      </div>
+    </div>
+		<div class="tracks-buttons">
+    	<div class="track-buttons-row">
+        <div class="round-btn" id="tracksCurrentBtn"><i class="fa fa-car"></i><span class="button-text">Today</span></div>
+        <div class="round-btn" id="tracksLogBtn"><i class="fa fa-reorder"></i><span class="button-text">Log</span></div>
+      </div>
+    	<div class="track-buttons-row">
+        <div class="round-btn" id="tracksSettingsBtn"><i class="fa fa-tachometer"></i><span class="button-text">Settings</span></div>
+        <!--div class="round-btn"><i class="fa fa-reorder"></i><span class="button-text">#4</span></div-->
+      </div>
+  	</div>    
+  </div>  
+  
+  
+  
+  <!-- 3.1 Tracks: Today
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  
+  
+	<div class="container secondary" id="tracksCurrent">
+    <div class="row">
+      <div style="text-align:center">
+        <div class="menu_strip">
+    			<h1 style="display:inline-block">TODAY'S TRACK</h1>
+        </div>
+      </div>
+    </div>
+    <div class="row" style="display:block">
+
+
+        <div class="position-row"><span id="current_location">Location Not Detected</span></div>
+          <div class="btn-start" id="btn-start" style="display: inline-block"><i class="fa fa-play" id="play-icon"></i></div>
+          <div class="btn-pause" id="btn-pause" style="display: none"><i class="fa fa-pause" id="pause-icon"></i></div>
+        
+        
+      <div style="text-align:center">
+        <div class="summary-row">
+          <div class="elapsed-time">
+          	<div class="digi-display">
+          		<div id="elapsedHours">00</div><span>:</span>
+              <div id="elapsedMinutes">00</div><span>:</span>
+              <div id="elapsedSeconds">00</div>
+            </div>
+          </div>
+          <div class="distance-travelled"><div class="digi-distance" id="totalDistance">0.0</div><div class="digi-kms">KM</div></div>
+        </div>
+        
+                
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <!-- 3.2 Tracks: Log
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  
+  
+	<div class="container secondary" id="tracksLog">
+    <div class="row">
+      <div style="text-align:center">
+        <div class="menu_strip">
+    			<h1 style="display:inline-block">TRACK LOG</h1>
+        </div>
+      </div>
+    </div>
+    <div class="row" style="display:block">
+      <div style="text-align:center">
+        <div id="no-connectivity" class="connectivity-msg" style="display:none">You must be connected to the internet to view your past track details.</div>
+        
+        
+        
+          <table class="scroll" id="yes-connectivity">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>EARNINGS($)</th>
+                <th>Uploaded</th>
+                <th>MAP</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>30/03/17</td><td>-</td><td><div class="btn-list" id="btn_upload_temp" style="opacity: 0.4">Upload</div></td><td><i class="fa fa-road"></i></td></tr>
+              <tr><td>29/03/17</td><td>-</td><td><div class="btn-list" id="btn_upload">Upload</div></td><td><i class="fa fa-road"></i></td></tr>
+              <tr><td>28/03/17</td><td>pending</i></td><td><i class="fa fa-check"></i></td><td><i class="fa fa-road mapUploaded"></i></td></tr>
+              <tr><td>27/03/17</td><td>33.64 <i class="fa fa-search-plus"></i></td><td><i class="fa fa-check"></i></td><td><i class="fa fa-road mapUploaded"></i></td></tr>
+            </tbody>
+          </table>
+        
+        
+        
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <!-- 4.0 Jobs Page Layout
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  
+  
+	<div class="container secondary" id="jobs">
+    <div class="row">
+      <div class="twelve columns" style="text-align:center">
+        <div class="menu_strip">
+    			<h1>JOBS</h1>
+        </div>
+      </div>
+    </div>
+		<div class="tracks-buttons" style="margin-top: 100px">
+    	<div class="track-buttons-row">
+        <div class="round-btn" id="jobsCurrentBtn"><i class="fa fa-star"></i><span class="button-text">Current</span></div>
+        <div class="round-btn" id="jobsSearchBtn"><i class="fa fa-search"></i><span class="button-text">Search</span></div>
+      </div>
+  	</div>    
+  </div>  
+ 
+ 
+ 
+ 
+ 
+ 
+  <!-- 5.0 Account Page Layout
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  
+  
+	<div class="container secondary" id="account">
+    <div class="row">
+      <div class="twelve columns" style="text-align:center">
+        <div class="menu_strip">
+    			<h1>ACCOUNT</h1>
+					<div id="res3"></div>
+        </div>
+      </div>
+    </div>
+		<div class="tracks-buttons" style="margin-top: 100px">
+					<div class="track-buttons-row">
+        		<div class="round-btn" id="myDetailsBtn"><i class="fa fa-smile-o"></i><span class="button-text">My Details</span></div>
+						<div class="round-btn" id="logout"><i class="fa fa-sign-out"></i><span class="button-text">Log Out</span></div>
+					</div>
+		</div>
+  </div>  
+  
+ 
+ 
+
+
+
+
+
+  <!-- 6.0 Take Photo Page Layout
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  
+  
+	<div class="container secondary" id="photo">
+    <div class="row">
+      <div class="twelve columns" style="text-align:center">
+        <div class="menu_strip">
+    			<h1>TAKE PHOTO</h1>
+        </div>
+      </div>
+    </div>
+  </div>  
+  
+
+  <!--div class="main_content" id="main_content" style="display:none">                   
+    <p id="result"></p>
+    <div class="takePicBtn" id="takePicBtn" style="display:none"><i class="fa fa-camera fa-3" aria-hidden="true"></i></div>
+  </div-->
+
+
+
+
+
+
+
+
+  <!-- 7.0 Menu Area
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+
+
+        <div id="menu" class="menuArea" style="display: none">
+        	<ul>
+          	<li id="menu-tracks">TRACKS</li>
+          	<li id="menu-jobs">JOBS</li>
+          	<li id="menu-account">ACCOUNT</li>
+          </ul>
+        </div>
+
+
+				<!-- menu overlay to fade and prevent button touch events -->
+        <div id="menu-fader" class="menuOverlay"></div>
+
+
+
+
+
+  <!-- 8.0 Go Back Buttons
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  
+	<div class="go_back_btn_area">
+    <div class="go_back_btn" id="go_back_to_tracks" style="display:none"><i class="fa fa-chevron-left"></i></div>
+    <div class="go_back_btn" id="go_back_to_tracks_log" style="display:none"><i class="fa fa-chevron-left"></i></div>
+	</div>
+
+
+
+
+  <!-- 9.0 Notifications
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  
+	<div class="indicator_area">
+    <div class="photo-notification" style="display:none"><i class="fa fa-camera"></i></div>
+    <div class="status" style="display:none"><i class="fa fa-wifi"></i></div>
+    <div class="status_blink" style="display:none"><i class="fa fa-wifi"></i></div>
+	</div>
+
+
+
+
+
+
+  <!-- 10.0 Overlay & Spinners/Preloaders
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  
+	<div class="overlay" style="display:none"></div>
+  <div class="spinner-uploading" style="display:none">uploading</div>
+  <div class="spinner-loading" style="display:none"><img src="images/loader.gif"></div>
+  <div class="spinner-logging-in" style="display:none"></div>
+  <div class="upload-error" style="display:none">error</div>  
+  
+  
+  
+  
+  
+
+  <!-- 11.0 Map
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+	
+  <div id="map" style="display: none"></div>
+		
+		
+
+
+
+
+ 
+ 
+ 
+ 
+ 
+
+
+
+  
+  
+
+<!-- End Document
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+</body>
+</html>
+
+
+
+
+
+<!--script type="text/javascript" src="js/gps.js"></script-->
+<script type="text/javascript" src="js/main.js"></script>
+<script type="text/javascript" src="js/map.js"></script>
+
+<script async defer
+	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAeupsWFDSSqyXxo9e5liXPRrFRuM4VSdU&callback=loadMap">
+</script>
+
+<script>
+// TIMER
+
+//var elapsedTime = document.getElementById('elapsedTime'),
+var elapsedHours = document.getElementById('elapsedHours'),
+		elapsedMinutes = document.getElementById('elapsedMinutes'),
+		elapsedSeconds = document.getElementById('elapsedSeconds'),
+    start = document.getElementById('btn-start'),
+    stop = document.getElementById('btn-pause'),
+    seconds = 0, minutes = 0, hours = 0,
+    t;
+
+function add() {
+    seconds++;
+    if (seconds >= 60) {
+        seconds = 0;
+        minutes++;
+        if (minutes >= 60) {
+            minutes = 0;
+            hours++;
+        }
+    }
+    
+    //elapsedTime.textContent = (hours ? (hours > 9 ? hours : "0" + hours) : "00") + ":" + (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00") + ":" + (seconds > 9 ? seconds : "0" + seconds);
+
+
+    elapsedHours.textContent = (hours ? (hours > 9 ? hours : "0" + hours) : "00");
+    elapsedMinutes.textContent = (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00");
+    elapsedSeconds.textContent = (seconds > 9 ? seconds : "0" + seconds);
+
+
+
+
+
+    timer();
+}
+function timer() {
+  t = setTimeout(add, 1000);
+	localforage.setItem("activeTime", elapsedTime.textContent);
+}
+
+
+
+/* Start button */
+start.onclick = timer;
+
+/* Stop button */
+stop.onclick = function() {
+    clearTimeout(t);
+}
+
+
+
+
+
+// Start timer if track is already active
+
+var trackActivity = JSON.parse(localforage.getItem("trackActivity"));
+
+alert(trackActivity);
+
+if (trackActivity == 1) {	
+	
+	timer();	//change pause/start button classes
+	$('.btn-start').fadeOut(0);
+	$('.btn-pause').fadeIn(50);
+	$('.status').hide();
+	$('.status_blink').show();
+	
+} else {
+	
+	//stopAfterStart(); //<-- ensures elapsed time is displayed when track is inactive
+	if( typeof elapsedTime !== 'undefined' ) {
+		var elapsedHours = "00";
+		var elapsedMinutes = "00";
+		var elapsedSeconds = "00";
+	}
+
+	$("#elapsedHours").html(elapsedHours);
+	$("#elapsedMinutes").html(elapsedMinutes);
+	$("#elapsedHours").html(elapsedHours);
+
+
+	//change pause/start button classes
+	$('.btn-pause').fadeOut(0);
+	$('.btn-start').fadeIn(50);
+	$('.status_blink').hide();
+	$('.status').show();
+}
+
+
+
+function stopAfterStart() {
+  timer();
+  setTimeout(stop,1001);
+}
+
+
+</script>
+
