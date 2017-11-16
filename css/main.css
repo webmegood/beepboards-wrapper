@@ -1,0 +1,980 @@
+html, body {
+	color: #999;
+}
+.container {
+	z-index: 21;
+}
+a, a:hover, a:active {
+	color: #999;
+}
+input[type="email"], input[type="number"], input[type="search"], input[type="text"], input[type="tel"], input[type="url"], input[type="password"], textarea, select {
+	border: 1px solid #999;
+	background-color: transparent;
+	color: #EEE;
+}
+.keep-logged-in-panel {
+	font-family: 'Fjalla One', sans-serif;
+	text-transform: uppercase;
+	padding: 12px 8px 2px 8px;
+}
+.form_error, .pincode_error {
+	font-family: 'Fjalla One', sans-serif;
+	text-transform: uppercase;
+	font-size: 100%;
+	color: #D28942;
+}
+.form_error {
+	margin-top: 10px;
+	margin-bottom: 6px;
+}
+.button.button-primary, .button.button-primary:hover {
+	background-color: #333;
+}
+#map {}
+.overlay {
+	background: #333;
+	position: fixed;
+	top: 0;
+	left:0;
+	width: 100vw;
+	height: 100vh;
+	z-index: 1000;
+}
+.spinner-loading {
+	position: fixed;
+	width: 32px;
+	height: 32px;
+	top: 50%;
+	margin-top: -16px;
+	left: 50%;
+	margin-left: -16px;
+	z-index: 1001;
+}
+.spinner-uploading, .upload-error {
+	position: fixed;
+	width: 120px;
+	height: 30px;
+	text-align: center;
+	top: 50%;
+	margin-top: -25px;
+	left: 50%;
+	margin-left: -76px;
+	z-index: 1001;
+	border: white 2px solid;
+	border-radius: 4px;
+	padding: 8px 14px;
+	color: white;
+	font-size: 1em;
+	line-height: 30px;
+	text-transform: uppercase;
+	letter-spacing: 0.2em;
+  -webkit-animation: 0.7s blink step-end infinite;
+  -moz-animation: 0.7s blink step-end infinite;
+  -ms-animation: 0.7s blink step-end infinite;
+  -o-animation: 0.7s blink step-end infinite;
+  animation: 0.7s blink step-end infinite;
+	animation-timing-function: ease;
+}
+.spinner-logging-in {
+  width: 72px;
+  height: 72px;
+  background-color: #CCC;
+	position: fixed;
+	top: 50%;
+	margin-top: -36px;
+	left: 50%;
+	margin-left: -36px;
+	z-index: 1001;
+  border-radius: 50%;  
+  -webkit-animation: sk-scaleout 1.0s infinite ease-in-out;
+  animation: sk-scaleout 1.0s infinite ease-in-out;
+}
+
+@-webkit-keyframes sk-scaleout {
+  0% { -webkit-transform: scale(0) }
+  100% {
+    -webkit-transform: scale(1.0);
+    opacity: 0;
+  }
+}
+
+@keyframes sk-scaleout {
+  0% { 
+    -webkit-transform: scale(0);
+    transform: scale(0);
+  } 100% {
+    -webkit-transform: scale(1.0);
+    transform: scale(1.0);
+    opacity: 0;
+  }
+}
+
+
+
+.main_content {
+	text-align:center;
+}
+#home {
+	z-index: 19;
+	height: 100vh;
+}
+.menu_strip {
+	text-align: center;
+	width: 100%;
+	display: block;
+	margin: 20px 0 0 0;
+	position: relative;
+}
+.summary-row, .position-row {
+	display: block;
+	width: auto;
+	min-height: 24px;
+	text-align: center;
+	float: none;
+	margin: 30px 12px 0px;
+	padding: 4px 6px;
+}
+.summary-row {
+	font-size: 1em;
+	color: #999;
+	padding: 12px 0px;
+}
+.elapsed-time {
+	display: inline-block;
+	float: left;
+	position: relative;
+	width: calc(50% - 2px);
+	margin-right: 2px;
+	text-align: center;
+	background: #222;
+	z-index:1;
+	overflow:hidden;
+}
+.digi-display {
+	position: relative;
+	text-align: left;
+	min-width: 80%;
+	display: inline-block;
+}
+.digi-display div {
+	display: inline-block;
+}
+.digi-display span {
+	display: inline-block;
+	margin: 0 2px;
+}
+.distance-travelled {
+	display: inline-block;
+	float: right;
+	position: relative;
+	width: calc(50% - 2px);
+	margin-left: 2px;
+	text-align: center;
+	background: #666;
+	overflow:hidden;
+}
+.digi-distance {
+	position: relative;
+	text-align: right;
+	display: inline-block;
+}
+.elapsed-time:before, .distance-travelled:before {
+	content:"";
+	position:absolute;
+	top:0;
+	right:0;
+	border-width:0 16px 16px 0; /* This trick side-steps a webkit bug */
+	border-style:solid;
+	border-color:#222 #222 #373737 #373737; /* A bit more verbose to work with .rounded too */
+	display:block; width:0; /* Only for Firefox 3.0 damage limitation */
+}
+.digi-kms {
+	position: relative;
+	text-align: center;
+	max-width: calc(40%-10px);
+	margin-left: 6px;
+	display: inline-block;
+}
+.elapsed-time, .distance-travelled {
+	padding: 20px 0px;
+	font-size: 2em;
+	background: #373737;
+	font-family: 'Fjalla One', sans-serif;
+}
+
+
+.bold {
+	font-weight: 800;	
+}
+h1, h2, h3, h4, h5, h6 {
+	font-family: 'Fjalla One', sans-serif;
+}
+h1 {
+	font-size: 2em;
+	color: #bbb;
+	letter-spacing: 0.05em;
+}
+h2 {
+	font-size: 1em;
+	color: #999;
+	letter-spacing: 0.05em;
+}
+h5, h6 {
+	margin:0;
+}
+.elapsed-time h6 {
+    display: inline;
+    width: 60px;
+    text-align: left;
+    float: left;
+}
+#landing .mainLogo img {
+	width: 136px;
+	height: auto;
+	position: relative;
+	margin: 50vh auto 0;
+	top: -100px;
+	display:block;
+}
+.mainTitle img {
+	width: 160px;
+	height: auto;
+	position: relative;
+	left: 50%;
+	margin-left: -80px;
+	margin-top: 40px;
+	display:block;
+}
+.mainLogo img {
+	width: 136px;
+	height: auto;
+	position: relative;
+	margin: 18vh auto 0;
+	display:block;
+}
+.btn-clear-bg {
+	display: block;
+}
+#btn-clear {
+	padding: 6px;
+	border: 1px solid #0066CC;
+	background: #EDF3F2;
+	text-transform: uppercase;
+	color: #666666;
+	font-size: 1em;
+	display: inline-block;
+}
+.go_back_btn_area {
+	position: fixed;
+	z-index: 1000;
+	top: 16px;
+	left: 8px;
+}
+.go_back_btn {
+	position: relative;
+	display: inline-block;
+	text-align:center;
+	background: rgba(255, 255, 255, 0.3);
+	border-radius: 50%;
+	width: 40px;
+	height: 40px;
+	text-align:center;
+}
+.go_back_btn i {
+	color: #555;
+	font-size: 1.6em;
+	display:inline-block;
+	line-height: 42px;
+	position: relative;
+	left: -1px;
+}
+.indicator_area {
+	position: fixed;
+	z-index: 1000;
+	top: 18px;
+	right: 8px;
+	text-align: right;
+}
+.status {
+	position: relative;
+	display: inline-block;
+	border: 2px #999 solid;
+	height: 28px;
+	width: 28px;
+	border-radius: 50%;
+	text-align:center;
+}
+.status i {
+	color: #999;
+	font-size: 1em;
+	line-height: 32px;
+	display:inline-block;
+}
+.status_blink {
+	position: relative;
+	display: inline-block;
+	border: 2px #33cc33 solid;
+	height: 28px;
+	width: 28px;
+	border-radius: 50%;
+	text-align:center;
+  -webkit-animation: 0.7s blink step-end infinite;
+  -moz-animation: 0.7s blink step-end infinite;
+  -ms-animation: 0.7s blink step-end infinite;
+  -o-animation: 0.7s blink step-end infinite;
+  animation: 0.7s blink step-end infinite;
+	animation-timing-function: ease;
+}
+.status_blink i {
+	color: #33cc33;
+	font-size: 1em;
+	line-height: 32px;
+	display:inline-block;
+}
+
+.photo-notification {
+	position: relative;
+	display: inline-block;
+	background: #555;
+	height: 32px;
+	width: 32px;
+	border-radius: 50%;
+	text-align:center;
+}
+.photo-notification i {
+	color: #FFF;
+	font-size: 1em;
+	line-height: 34px;
+	display:inline-block;
+}
+@keyframes "blink" {
+  from, to {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@-moz-keyframes blink {
+  from, to {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes "blink" {
+  from, to {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@-ms-keyframes "blink" {
+  from, to {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@-o-keyframes "blink" {
+  from, to {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+.btn-pause, .btn-start {
+	/*border: 4px solid #333;*/
+	height: 30vw;
+	width: 30vw;
+	border-radius: 50%;
+	position: relative;
+	text-align: center;
+	margin: 3vh 0;
+	display: inline-block;
+	-webkit-box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.5);
+	-moz-box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.5);
+	box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.5);
+  text-align: center;
+}
+.btn-pause, .btn-start {
+	background: #666;
+	left: 50%;
+	margin-left: -15vw;
+}
+.btn-pause i, .btn-start i {
+	color: #444;
+	font-size: 2em;
+	line-height: 30vw;
+	display: inline-block;
+	position: relative;
+	left: 2px;
+}	
+
+
+.divider_h {
+	width: auto;
+	height: 2px;
+	background: #DDD;
+	display: block;
+	position: fixed;
+	bottom: 14vh;
+	left: 12px;
+	right: 12px;
+	z-index: 301;
+}
+.menuOverlay {
+	background: #FFF;
+	opacity: 0.4;
+	display: table;
+	width: 100%;
+	height: calc(12vh + 3px);
+	position: fixed;
+	z-index: 301;
+	bottom: 0;
+	left: 0;
+	display:block;
+}
+.menuArea ul {
+	display: table;
+	width: 100%;
+	position: fixed;
+	z-index: 300;
+	font-family: 'Fjalla One', sans-serif;
+	bottom: 0;
+	left: 0;
+	margin:0;
+	padding: 0;
+	border-top: 1px solid #575757;
+
+/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#5d5454+0,302c2c+100 */
+background: #5d5454; /* Old browsers */
+background: -moz-linear-gradient(top, #5d5454 0%, #302c2c 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(top, #5d5454 0%,#302c2c 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(to bottom, #5d5454 0%,#302c2c 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5d5454', endColorstr='#302c2c',GradientType=0 ); /* IE6-9 */
+
+}
+.menuArea ul li {
+	color: #bbb;
+	height: 12vh;
+	text-align: center;
+	margin: 0;
+	line-height: 12vh;
+	padding: 3px 0 0 0;
+	position: relative;
+	border-right: 1px #333 solid;
+}
+.menuArea ul li:nth-child(2) {
+	border-left: 1px #575757 solid;
+	border-right: 1px #333 solid;
+}
+.menuArea ul li:nth-child(3) {
+	border-left: 1px #575757 solid;
+	border-right: none;
+}
+.menuArea ul li:hover {
+	cursor:pointer;
+}
+ul > li {
+	display: table-cell;
+}
+.menuArea ul li:hover, .menuArea ul li.current, .menuArea ul li.active {
+	border-bottom-color: #AAA;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  -webkit-tap-highlight-color: transparent; /* For some Androids */
+	color: #FFF;
+}
+}
+#menu-tracks {
+	width: 33%;
+}
+#menu-account {
+	width: 34%;
+}
+#menu-jobs {
+	width: 33%;
+}
+.takePicBtn {
+	display: inline-block;
+	height: 60px;
+	width: 60px;
+	border: 4px solid #AAA;
+	border-radius: 50%;
+	position: fixed;
+	right: 12px;
+	top: 80px;
+	background-color: #F4F4F4;
+}
+.takePicBtn i {
+	color: #AAA;
+	line-height: 60px;
+}
+
+/* INITIAL LOADER */
+.spinner {
+  width: 120px;
+  height: 120px;
+  position: relative;
+  margin: 60px auto;
+}
+
+.double-bounce1, .double-bounce2 {
+	width: 100%;
+	height: 100%;
+	border-radius: 50%;
+	background-color: #CC9;
+	opacity: 0.7;
+	position: absolute;
+	top: 0;
+	left: 0;
+	-webkit-animation: sk-bounce 2.0s infinite ease-in-out;
+	animation: sk-bounce 2.0s infinite ease-in-out;
+}
+
+.double-bounce2 {
+  -webkit-animation-delay: -1.0s;
+  animation-delay: -1.0s;
+}
+
+@-webkit-keyframes sk-bounce {
+  0%, 100% { -webkit-transform: scale(0.0) }
+  50% { -webkit-transform: scale(1.0) }
+}
+
+@keyframes sk-bounce {
+  0%, 100% { 
+    transform: scale(0.0);
+    -webkit-transform: scale(0.0);
+  } 50% { 
+    transform: scale(1.0);
+    -webkit-transform: scale(1.0);
+  }
+}
+
+
+.tracks-buttons {
+	float: none;
+	margin: 5vh auto 0 auto;
+	display: block;
+	text-align: center;
+	position: relative;
+}
+.track-buttons-row {
+	display: inline-block;
+	margin-bottom: 20px;
+}
+.round-btn {
+	font-family: 'Fjalla One', sans-serif;
+	border-radius: 50%;
+	color: #333;
+	font-size: 2em;
+	text-align: center;
+	width: 90px;
+	height: 90px;
+	text-transform: uppercase;
+	display: inline-block;
+	margin: 10px 25px;
+	border: solid 1px #AAA;
+	opacity: 0.6;
+	background-size: 200% 100%;
+	background-position: right bottom;
+	background-color: #9F9595;
+}
+.round-btn:hover, .round-btn:active {
+	cursor: pointer;
+	background-position:left bottom;	
+	transition:all 0.4s ease;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  -webkit-tap-highlight-color: transparent; /* For some Androids */
+	background-color: #BBB;
+}
+.round-btn i {
+	margin-bottom: 5px;
+	color: #444;
+	display: block;
+	line-height: 90px;
+}
+.round-btn .button-text {
+	font-size: 0.5em;
+	color: #e9dede;
+	line-height: 35px;
+	display: block;
+}
+.btn-current {
+	border-color: #33cc33;
+}
+.round-btn.btn-current i, .round-btn.btn-current .button-text {
+	color: #33cc33;
+}
+.button_zone {
+	width: auto;
+	left: 25px;
+	right: 25px;
+	bottom: 20px;
+	position: absolute;
+}
+.button {
+	font-size: 1.2em;
+	width: 100%;
+	height: 60px;
+	line-height: 62px;
+	border: none;
+}
+#uploadBtn {
+	background-color: #C69;
+}
+#restartBtn {
+	background: #6C9;
+}
+
+
+
+.imageRotateHorizontal{
+    -moz-animation: spinHorizontal 1.2s infinite linear;
+    -o-animation: spinHorizontal 1.2s infinite linear;    
+    -webkit-animation: spinHorizontal 1.2s infinite linear;
+    animation: spinHorizontal 1.2s infinite linear;
+}
+
+@-moz-keyframes spinHorizontal {
+    0% {
+        -moz-transform: rotateY(0deg);
+    }
+
+    100% {
+        -moz-transform: rotateY(360deg);
+    }
+}
+
+@keyframes spinHorizontal {
+	0% { 
+        transform: rotateY(0deg); 
+	}
+    100% {
+        transform: rotateY(360deg);
+    }
+}
+@-webkit-keyframes spinHorizontal {
+	0% { 
+        -webkit-transform: rotateY(0deg); 
+	}
+    100% {
+        -webkit-transform: rotateY(360deg);
+    }
+}
+
+
+
+
+
+
+
+/*** ---- SECONDARY PAGES ---- ***/
+
+
+.secondary, #backgroundPanel {
+	width: 100vw;
+	height: 100vh;
+	float: right;
+	position: fixed;
+	z-index: 200;
+	right: 0vw;
+	top: 0;
+
+
+
+/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#484848+0,222222+47 */
+background: #484848; /* Old browsers */
+background: -moz-linear-gradient(top, #484848 0%, #222222 47%); /* FF3.6-15 */
+background: -webkit-linear-gradient(top, #484848 0%,#222222 47%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(to bottom, #484848 0%,#222222 47%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#484848', endColorstr='#222222',GradientType=0 ); /* IE6-9 */
+
+
+
+}
+
+
+
+#landing, #authenticate, #home, #tracks, #tracksCurrent, #tracksLog, #jobs, #account, #photo {
+	display: none;
+	z-index: 21;
+}
+
+
+.secondary {
+	box-sizing:none !important;
+	padding: 0 !important;
+	margin:0 !important;
+	width: 100% !important;
+	z-index: 21;
+}
+#backgroundPanel {
+	z-index: 20;
+	right: 0;
+}
+
+
+
+
+
+
+.container table:first-child {
+	display: none;
+}
+
+
+
+.connectivity-msg {
+	padding: 0 8px;
+	line-height: 1em;
+	margin-top: 15vh;
+}
+
+table.scroll {
+  width: calc(100% - 24px);
+	margin: 0 12px;
+}
+
+table.scroll th,
+table.scroll td,
+table.scroll tr,
+table.scroll thead,
+table.scroll tbody { display: block; }
+
+table.scroll thead tr {
+    width: 100%;
+}
+
+table.scroll tr:after {
+    content: ' ';
+    display: block;
+    visibility: hidden;
+    clear: both;
+}
+
+table.scroll tbody {
+		height: 45vh;
+		height: calc(100vh - 300px);
+    overflow-y: auto;
+}
+
+table.scroll tbody td,
+table.scroll thead th {
+		padding: 12px 6px 12px 0px;
+    float: left;
+		width: calc(18% - 6px);
+}
+table.scroll tbody td:nth-child(2),
+table.scroll thead th:nth-child(2) {
+		width: calc(38% - 6px);
+		text-align:center;
+}
+table.scroll tbody td:nth-child(3),
+table.scroll thead th:nth-child(3) {
+		width: calc(30% - 6px);
+		text-align:center;
+}
+table.scroll tbody td:nth-child(4),
+table.scroll thead th:nth-child(4) {
+		width: calc(14% - 6px);
+		text-align:center;
+}
+table.scroll tbody td:nth-child(4) {
+	padding: 12px 6px 8px 0px;
+}
+table.scroll .btn-list {
+	font-family: 'Fjalla One', sans-serif;
+	text-transform: uppercase;
+	background-color: #3C3;
+	color: #FFF;
+	padding: 5px 6px 1px 6px;
+	position:relative;
+	margin-top: -6px;
+	top: 3px;
+	border-radius: 4px;
+}
+input[type="email"], input[type="number"], input[type="search"], input[type="text"], input[type="tel"], input[type="url"], input[type="password"], textarea, select {
+	height: 60px;
+	font-size: 20px;
+}
+label, legend {
+    display: block;
+    margin-bottom: .5rem;
+    font-weight: 300;
+}
+table.scroll .btn-list#btn_upload {
+	cursor: pointer;
+}
+table.scroll thead th { 
+  height: 46px;
+  line-height: 46px;
+	border-color: #888;
+	font-family: 'Fjalla One', sans-serif;
+	text-transform: uppercase;
+	font-weight:100;
+	padding: 12px 6px 0px 0px;
+  /*text-align: left;*/
+}
+table.scroll .fa-check {
+	color: #3C3;
+}
+.fa-road {
+	font-size: 1.5em;
+	line-height: 1.2em;
+	opacity: 0.25;
+}
+.fa-road.mapUploaded {
+	opacity: 1;
+}
+
+
+
+
+
+/*** ---- TRACKS PAGE ---- ***/
+
+
+
+
+
+
+
+
+
+
+
+/* Media Queries
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+/*
+
+
+/* Landscape */
+@media (orientation: landscape) {
+
+.mainLogo img {
+  margin: 0vh auto;
+  width: 100px;
+}
+.divider_h {
+	bottom: 22vh;
+}
+.menuArea ul li {
+	height: 16vh;
+	line-height: 16vh;
+}
+table.scroll thead th {
+		padding: 3px 6px 3px 0px;
+}
+table.scroll tbody {
+		height: calc(100vh - 260px);
+}
+
+}
+@media (orientation: landscape) and (max-device-width : 568px)  {
+
+#tracksCurrent h1 {
+	font-size: 1.5em;
+	line-height: 0;
+}
+table.scroll tbody {
+    height: 100px;
+}
+
+}
+
+
+
+
+
+
+
+
+.forceHeight {
+  height: 1500px;
+}
+.normaliseHeight {
+  height: 100%;
+  min-height: 100%;
+}
+
+
+
+
+/** Pincode Area **/
+
+.pincode_display {
+	margin-bottom: 40px;
+}
+.pincode_display_digit {
+	font-family: 'Fjalla One', sans-serif;
+	font-size: 32px;
+	display: inline-block;
+	margin-right: 10px;
+	margin-left: 10px;
+	line-height: 40px;
+	width: 30px;
+	padding-bottom: 0px;
+	width: 10px;
+	height: 10px;
+	border: 1px solid #999;
+	border-radius: 50%;
+}
+.pincode_keypad {}
+.pincode_keypad_row {
+	display: block;
+	width: auto;
+	margin-right: 2vw;
+	margin-left: 2vw;
+	text-align: center;
+	margin-bottom: 10px;
+}
+.pincode_keypad_digit {
+	font-family: 'Fjalla One', sans-serif;
+	display: inline-block;
+	margin-right: 12px;
+	margin-left: 12px;
+	line-height: 37px;
+	width: 34px;
+	height:34px;
+	text-align: center;
+	border: 2px solid #999;
+	border-radius: 50%;
+	color: #999;
+	font-size: 30px;
+	padding: 10px;
+}
+.pincode_keypad_digit:active {
+	background: #999;
+	color: #333;
+}
+.pincode_keypad_text {
+	font-family: 'Fjalla One', sans-serif;
+	display: inline-block;
+	line-height: 37px;
+	width: 0px;
+	height: 34px;
+	text-align: center;
+	color: #999;
+	font-size: 18px;
+	position: relative;
+	top: -5px;
+}
+.pincode_keypad_clear {
+	right: 60px;
+}
+.pincode_keypad_cancel {
+	left: 18px;
+}
+.pdFill {
+	background: #999;
+}
